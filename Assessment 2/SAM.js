@@ -1,4 +1,4 @@
-var data = {
+var SAM = {
 "type": "FeatureCollection",
 "name": "SAM",
 "features": [
