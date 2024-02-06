@@ -52,11 +52,17 @@
             "Esri Ocean BaseMap": Esri_OceanBasemap
         };
 
+        var bermuda = [32.3078, -64.7505]
+        var marker = L.marker(bermuda).bindPopup("<b>Bermuda</b>").addTo(map);
+
         var overlayMaps = {
             "Path": mypoints,
+            "Bermuda" : marker
             // "Carolina Hall": marker,
             // "My first waypoint": myFirstPoint,
         };
+
+       
 
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
     </script>
