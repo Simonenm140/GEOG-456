@@ -1,0 +1,67 @@
+<!-- Using the dataset that you selected, loop (using the forEach() method through the data using JS and create a table using HTML. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="cleandat.js"></script>
+
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+<body>
+    <h2>Food Environment Atlas</h2>
+
+<table id = "myTable">
+  <tr>
+    <th>County</th>
+    <th>Low income & low access to store population, 2010</th>
+  </tr>
+</table>
+
+    <script>
+        var x = document.getElementById('myTable')
+
+
+    // Loop through features and populate the table
+    for (var i = 0; i < data.features.length; i++) {
+        var myNewRow = document.createElement('tr');
+        var myNewCell1 = document.createElement('td'); 
+        var myNewCell2 = document.createElement('td'); 
+
+        myNewCell1.innerText = data.features[i].properties.NAME;
+        myNewCell2.innerText = data.features[i].properties.LACCESS_LOWI10;
+
+        myNewRow.append(myNewCell1);
+        myNewRow.append(myNewCell2);
+
+        x.append(myNewRow);
+    } // var myNewRow = document.createElement('tr')
+        // var myNewCell1 = document.createElement('td')
+        // var myNewCell2 = document.createElement('td')
+        // myNewCell1.innerText = 'A name'
+        // myNewCell2.innerText = 'Independent'
+        // myNewRow.append(myNewCell1)
+        // myNewRow.append(myNewCell2)
+        // x.append(myNewRow)
+    
+    </script>
+</body>
+</html>
