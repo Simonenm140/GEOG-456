@@ -104,7 +104,7 @@ function resetHighlight(e) {
       var div = L.DomUtil.create('div', 'info legend');
       var labels = [];
 
-      div.innerHTML += '<strong>Legend</strong><br>';
+      div.innerHTML += '<strong>Population</strong><br>';
 
       for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -124,10 +124,6 @@ function resetHighlight(e) {
                 return this._div;
             };
 
-            legendTitle.update = function (props) {
-                this._div.innerHTML = '<h3><u>Population</u></h3>';
-            };
-            legendTitle.addTo(map);
 
   legendTitle.update = function (name) {
     this._div.innerHTML = '<h3><u>County Name</u></h3>' + (name ? '<strong>' + name + '</strong>' : 'Hover over a county');
