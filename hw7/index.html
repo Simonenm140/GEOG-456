@@ -11,6 +11,21 @@
     #map {
       height: 500px;
     }
+    .legend {
+            line-height: 18px;
+            color: #000000;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7; 
+        }
   </style>
 </head>
 
@@ -25,7 +40,7 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="cleandat.js"></script>
   <script>
-    var map = L.map('map').setView([35.5, -80], 7);
+    var map = L.map('map').setView([35.2,-79.5], 7.2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
@@ -44,6 +59,7 @@ var geojson = L.geoJson(data, {
       fillColor: getColor(feature.properties.LACCESS_HHNV10)
     };
   },
+  // Function to handle mouseover event, from chatgpt
   onEachFeature: function (feature, layer) {
     layer.on({
       mouseover: highlightFeature,
@@ -83,40 +99,20 @@ function resetHighlight(e) {
         '#99000D';
     }
 
-    var myCurrentSelectionYear = 'LACCESS_HHNV10'; // the initial year to start the data
-
-    // Function called by the slider that receives the value from the slider
-    function moveSlider(value) {
-      document.getElementById('daYear').innerHTML = 'Year: ' + value;
-      myCurrentSelectionYear = 'LACCESS_HHNV' + value.slice(-2); // update the current year, from chatpgt
-      geojson.eachLayer(function (layer) {
-        layer.setStyle({
-          fillColor: getColor(layer.feature.properties[myCurrentSelectionYear])
-        });
-      });
-    }
-
-    // legend from austin water, not sure why the colors dont show next to the numbers
     var legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function (map) {
-      var grades = [0, 500, 1000, 2000];
-      var div = L.DomUtil.create('div', 'info legend');
-      var labels = [];
-
-      div.innerHTML += '<strong>Population</strong><br>';
-
-      for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-          '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      }
-      return div;
-    };
-
+      var div = L.DomUtil.create('div', 'legend');
+            div.innerHTML += '<h4>Population</h4>';
+            div.innerHTML += '<div><i style="background:#FFEDA0"></i> 0-500</div>';
+            div.innerHTML += '<div><i style="background: #E31A1C"></i> 500-1000</div>';
+            div.innerHTML += '<div><i style="background:#BD0026"></i> 1000-2000</div>';
+            div.innerHTML += '<div><i style="background:#99000D"></i> >2000</div>';
+            return div;
+        };
     legend.addTo(map);
 
-    
+
     var legendTitle = L.control({position: 'bottomright'});
             legendTitle.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'info');
@@ -133,6 +129,20 @@ legendTitle.addTo(map);
       document.getElementById('yearSlider').value = '2010'; // set the initial value to 2010
     };
 
+
+    var myCurrentSelectionYear = 'LACCESS_HHNV10'; // the initial year to start the data
+
+    // Function called by the slider that receives the value from the slider
+    function moveSlider(value) {
+      document.getElementById('daYear').innerHTML = 'Year: ' + value;
+      myCurrentSelectionYear = 'LACCESS_HHNV' + value.slice(-2); // update the current year, from chatpgt
+      geojson.eachLayer(function (layer) {
+        layer.setStyle({
+          fillColor: getColor(layer.feature.properties[myCurrentSelectionYear])
+        });
+      });
+    }
+    
   </script>
 </body>
 
@@ -142,86 +152,3 @@ legendTitle.addTo(map);
 
 
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Followill Leaflet HW 9/22</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-    crossorigin=""></script>
-    <script src="cleandat.js"></script>
-</head>
-    <style>
-        #map {
-            width: 100%;
-            height: 800px;
-            background-color: lightblue;
-        }
-    </style>
-
-<body>
-
-<h2>Change in Access to Grocery Stores Among Low Income Populations in NC</h2>
-<h3>Simone McFarlane- Leaflet HW 2.29.24</h3>
-        <h3 id = daYear>Year</h3>
-        <input id="yearSlider" type="range" name="year" min="2010" max="2015" step="5" oninput="moveSlider(this.value)" value="2010">
-    <br></br>
-    <div id="map"></div>
-
-
-</body>
-<script>
-
-    var map = L.map('map').setView([35.3, -79.9], 8);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    }).addTo(map);
-    
-    function myStyle(features) {
-        //console.log(features.properties.DATE) // This the property with the DATE value. 
-        return {
-    "color": getColor(features.properties.LACCESS_LOWI10), // the color is obtained from the getColor function
-    "weight": 1,
-    "opacity": 0.65
-        }
-    };
-
-    function getColor(d) {
-        return d < myCurrentSelectionYear ? "blue" : // The getColor has a parameter d which in our case is the value of a Year. If the Year is less than the Year selected in the slider, then we get blue, otherwise it returns gray
-                    "gray blue" ;
-    }
-
-    var geojson = L.geoJSON(cleandat, {style: myStyle}).addTo(map); // the entire geojson is displayed
-
-
-    var myCurrentSelectionYear = LACCESS_LOWI10 // the initial year to start the data
-
-    function moveSlider(value) { // function called by the slider that receives the value from the slider. 
-        // console.log(value)
-        document.getElementById('daYear').innerHTML = 'Year: ' + value // assign the value of year into the text
-        myCurrentSelectionYear = value // reassign the new selected year value
-        geojson.resetStyle() // leaflet method to reassign a Style. 
-        // console.log(myCurrentSelectionYear)
-    }
-
-    moveSlider(myCurrentSelectionYear) // run the function moveSlider with the year 1840 to start with our first year. 
-
-
-
-    window.onload = function() {
-        document.getElementById('yearSlider').value = 1840;  
-    }; // I added this section to make sure that the slider goes back to 1840 after refreshing
-
-</script>   
-<br>
-<a href = "https://dpcd-coaplangis.opendata.arcgis.com/datasets/coaplangis::annexations-3/explore?location=33.715549%2C-84.510605%2C11.81">
-    Link to Data Source </a>
-</br>
-</body>
-</html> -->
