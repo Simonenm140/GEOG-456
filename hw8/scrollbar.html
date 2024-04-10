@@ -1,0 +1,79 @@
+<!-- Another page should show the change of one image to another using a range (scrollbar) that controls the opacity of an image.  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Change</title>
+</head>
+<style>
+    body{
+        font-size:20px;
+    }
+    div#image_container{
+        top: 20%;
+        
+    }
+    img{
+        height:80%;
+        position: absolute;
+    }
+
+    #before{
+        z-index: 1;
+        opacity: 1;
+    }
+    #after{
+        z-index: 2;
+        opacity: .5;
+    }
+
+    #after2{
+        z-index: 3;
+        opacity: 0;
+    }
+
+datalist {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+option {
+  padding: 0;
+}
+
+input {
+  width: 400px;
+  margin: 0;
+}
+
+</style>
+<body>
+<label for="year"><h1>Change Over Time in Old Fourth Ward, Atlanta, Georgia</h1></label><br />
+<input type="range" id="year" name="year" list="tickmarks" value="0" oninput="myFunction(this.value)"/>
+<datalist id="tickmarks">
+  <option value="0" label="2005"></option>
+  <option value="50" label="2010"></option>
+  <option value="100" label="2019"></option>
+</datalist>
+
+
+<div id="image_container">
+        <img id="after2"  src="2019.png" alt="">
+        <img id="after"  src="2010.png" alt="">
+        <img id="before" src="2005.png" alt="">
+
+    </div>
+<script>
+    function myFunction(e) {
+        console.log(e)
+        document.getElementById("after").style.opacity = e/100;
+        document.getElementById("after2").style.opacity = e/100;
+    }
+    </script>
+</body>
+</html>

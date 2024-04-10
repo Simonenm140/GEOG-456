@@ -1,0 +1,100 @@
+  <!-- Another page should use buttons to select among three images (bonus if you also add text that changes as you change the image). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buttons</title>
+    <style>
+     /* Style to display images overlaid on top of each other */
+        #imageContainer {
+            position: relative;
+            width: 800px;/* Set width for container */
+            height: 354px; /* Set height for container */
+            justify-content: center;
+            overflow: hidden; /* Hide overflow */
+        }
+
+        /* Style for individual images */
+    .image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Make image fill container */
+    height: 100%;
+    opacity: 0; /* Initial opacity */
+    transition: opacity 0.3s ease; /* Add transition effect for opacity changes */
+}
+
+
+        /* Style for buttons */
+        .buttonContainer {
+            text-align: center; /* Center buttons horizontally */
+            margin-top: 20px; /* Adjust spacing from the top */
+        }
+
+        .imageButton {
+            margin: 0 10px; /* Adjust spacing between buttons */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Change Over Time in Old Fourth Ward, Atlanta, Georgia</h1>
+      <!-- Slider title -->
+      <div id="sliderTitle">Click a button below to see a particular year.</div>
+    
+    <!-- Container for images and controls -->
+    <div id="imageContainer">
+        <!-- Base image (2012) -->
+        <img id="image2005" class="image" src="2005.png" alt="OFW 2005">
+        <!-- Overlay images (2016 and 2020) -->
+        <img id="image2010" class="image" src="2010.png" alt="OFW 2010">
+        <img id="image2019" class="image" src="2019.png" alt="OFW 2019">
+    </div>
+
+    <!-- Buttons to select images -->
+    <div class="buttonContainer">
+        <button class="imageButton" onclick="changeImage('image2005')"> Show Old Fourth Ward in 2005</button>
+        <button class="imageButton" onclick="changeImage('image2010')">Show Old Fourth Ward in 2010</button>
+        <button class="imageButton" onclick="changeImage('image2019')">Show Old Fourth Ward in 2019</button>
+    </div>
+
+    <div class="sliderTitle">
+
+    </div>
+
+    <script>
+        // Function to change the displayed image
+    function changeImage(imageId) {
+        var images = document.querySelectorAll('.image');
+        // Hide all images
+        images.forEach(function(image) {
+            image.style.opacity = 0;
+        });
+        // Show the selected image
+        var selectedImage = document.getElementById(imageId);
+        selectedImage.style.opacity = 1;
+        // Update slider title
+        var sliderTitle = document.getElementById('sliderTitle');
+        sliderTitle.textContent = "Image: Old Fourth Ward in " + selectedImage.alt.substring(selectedImage.alt.lastIndexOf(" ") + 1);
+    }
+
+        // Function to get the year of the currently displayed image
+        function getImageYear() {
+            var images = document.querySelectorAll('.image');
+            for (var i = 0; i < images.length; i++) {
+                if (images[i].style.opacity == 1) {
+                    return images[i].alt.substring(images[i].alt.lastIndexOf(" ") + 1);
+                }
+            }
+            return "";
+        }
+    </script>
+</body>
+</html>
