@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Heatmap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+</head>
+<style>
+    #map { height: 500px; }
+    #year-slider { width: 80%; margin: 10px auto; }
+</style>
+<body>
+    <h1>Lesbian Bars Heatmap Over Time, 1911-2024</h1>
+    <h2 id="theYear">Year: 1911</h2>
+    <input id="year-slider" type="range" min="1910" max="2024" step="1" value="1910">
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin="">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script src="./final.js"></script>
+    <script>
+        var map = L.map('map').setView([39.8283, -98.5795], 3);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#B83253",
+            color: "#B83253",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+        var heatLayer;
+        var markers = L.markerClusterGroup(); // Initialize marker clustering
+
+        function updateMap(year) {
+            // Filter data based on selected year
+            var filteredData = data.features.filter(function(feature) {
+                return feature.properties.Year == year;
+            });
+
+            // Extract latitudes and longitudes from filtered data
+            var heatData = filteredData.map(function(feature) {
+                return [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+            });
+
+            // Remove existing heatmap layer if it exists
+            if (heatLayer) {
+                map.removeLayer(heatLayer);
+            }
+
+            // Create a heatmap layer with filtered data
+            heatLayer = L.heatLayer(heatData, {
+                radius: 30, // Adjust the radius of each point
+                gradient: {0.05: 'purple', 0.4: '#F25C05', 0.5: 'yellow'}, // Customize the gradient colors
+                blur: 3,
+            }).addTo(map);
+
+            // Clear existing markers before adding new ones
+            markers.clearLayers();
+
+            // Create markers layer with filtered data
+            var clusterLayer = L.geoJSON(filteredData, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, geojsonMarkerOptions);
+                },
+                onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.title) {
+                layer.bindPopup('<h3>' + feature.properties.title + '</h3>' +
+                                '<p>' + feature.properties.streetaddress + ', ' + feature.properties.city + '</p>' +
+                                '<p>Year: ' + feature.properties.Year + '</p>');
+            }
+        }
+            });
+
+            // Add markers to marker cluster group
+            markers.addLayer(clusterLayer);
+
+            // Add marker cluster group to map
+            map.addLayer(markers);
+
+            // Update the text above the map
+            document.getElementById('theYear').innerHTML = 'Year: ' + year;
+        }
+
+        // Initial map load
+        updateMap(1911);
+
+        // Add event listener for slider input
+        var slider = document.getElementById('year-slider');
+        slider.addEventListener('input', function() {
+            var value = parseInt(this.value);
+            updateMap(value); // Update the map based on the slider value
+        });
+    </script>
+</body>
+</html>
