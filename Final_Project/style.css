@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=League+Spartan:wght@400;500&family=Unbounded:wght@500;700&display=swap');
+
+#map { 
+    height: 500px;
+    z-index: 1;
+    position: relative;
+ }
+
+#year-slider { 
+    width: 100%;
+    margin: auto;
+    /* background-color: #FF9D43; */
+ }
+
+
+
+body{
+    background-color: #941b50; /* Set your desired background color */
+
+}
+
+/* Override Leaflet's default styles for .leaflet-container */
+.leaflet-container {
+    position: relative; /* Set to relative positioning */
+    z-index: 1; /* Set a higher z-index than the background */
+    /* Add any other styles you want to modify */
+}
+
+
+/*text formatting */
+h1 {
+    font-family: 'Unbounded', bold;
+    font-size: 4.5vw;
+    line-height: normal;
+    color:#FAD7BF;
+    text-align: center;
+    margin: 1.5vw;
+}
+
+h2 {
+    font-family: 'Josefin Sans';
+    font-size: 2vw;
+    color: white;
+    text-align:center;
+}
+
+.button {
+    font-family: 'Josefin Sans';
+
+}
+
+.marker-cluster-small {
+	background-color: #F7883F;
+	}
+.marker-cluster-small div {
+	background-color: #f47d2e;
+	}
+
+.marker-cluster-medium {
+	background-color:  #C35C9A;
+	}
+.marker-cluster-medium div {
+	background-color: #c44e95;
+	}
+
+.marker-cluster-large {
+	background-color:  #941b50;
+	}
+.marker-cluster-large div {
+	background-color: #891547;
+}
+
+.leaflet-oldie .marker-cluster-small {
+        background-color: #F7883F;
+        }
+    .leaflet-oldie .marker-cluster-small div {
+        background-color: #f47d2e;
+        }
+    
+    .leaflet-oldie .marker-cluster-medium {
+        background-color: #C35C9A;
+        }
+    .leaflet-oldie .marker-cluster-medium div {
+        background-color: #c44e95;
+        }
+    
+    .leaflet-oldie .marker-cluster-large {
+        background-color: #941b50;
+        }
+    .leaflet-oldie .marker-cluster-large div {
+        background-color: #941b50;
+    }
+
+
+
