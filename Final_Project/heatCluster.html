@@ -19,6 +19,11 @@
 </style> -->
 <body>
     <h1>LESBIAN NIGHTLIFE OVER TIME 1911-2024</h1>
+    <p>As queer individuals and scholars, we place great significance on this geovisualization and the examination of lesbian spaces. Lesbian bars and clubs have been historically underinvested, understudied, and underappreciated, particularly in comparison to gay male spaces. 
+    <br>
+    <br>
+    Some of our data draws from “Mapping the Gay Guides”  (MGG), which visualizes the Damron Address Books in an effort to illustrate often overlooked queer geographies. These travel guides, dating back to the early 1960s, have been a longstanding resource for gay men. Similar to the green books utilized by African Americans in the Jim Crow era to locate businesses catering to Black clients in the South, Damron Guides played a crucial role in helping a generation of queer individuals identify spaces of community, pleasure, and politics. 
+    </p>
     <h2 id="theYear">Year: 1911</h2>
     <input id="year-slider" type="range" min="1910" max="2024" step="1" value="1910">
     <div id="map"></div>
@@ -43,6 +48,7 @@
         attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         ext: 'png'
         }).addTo(map);
+
 
         var geojsonMarkerOptions = {
             radius: 8,
@@ -89,8 +95,8 @@
                 onEachFeature: function (feature, layer) {
                 if (feature.properties && feature.properties.title) {
                 layer.bindPopup('<h3>' + feature.properties.title + '</h3>' +
-                                '<p>' + feature.properties.streetaddress + ', ' + feature.properties.city + '</p>' +
-                                '<p>Year: ' + feature.properties.Year + '</p>');
+                                '<p2>' + feature.properties.streetaddress + ', ' + feature.properties.city + '</p2>' +
+                                '<p2>Year: ' + feature.properties.Year + '</p2>');
             }
         }
             });

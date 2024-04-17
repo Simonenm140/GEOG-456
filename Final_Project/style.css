@@ -40,14 +40,15 @@ h1 {
 h2 {
     font-family: 'Josefin Sans';
     font-size: 2vw;
-    color: white;
+    color: #FAD7BF;
     text-align:center;
 }
-
-.button {
+p {
     font-family: 'Josefin Sans';
-
+    font-size: 2vw;
+    color: white;
 }
+/* Map Styling */
 
 .marker-cluster-small {
 	background-color: #F7883F;
