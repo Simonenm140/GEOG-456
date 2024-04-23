@@ -20,6 +20,7 @@
      margin: 0; /* Remove default body margin */
      padding: 0; /* Remove default body padding */
      overflow-x: hidden; /* Prevent horizontal scrolling */
+
  }
  
 .container {
@@ -33,6 +34,7 @@
  .column {
     margin-left: 2vw;
     margin-right: 2vw;
+    display: flex;
     /*box-sizing: border-box;*/
   }
  
@@ -77,7 +79,7 @@
     padding: 10px; /* Padding around the caption text */
     font-family: "Inconsolata";
     text-align: center; /* Align caption text to center */
-    font-size: 14px; /* Font size for the caption text */
+    font-size: 2vw; /* Font size for the caption text */
 }
 
 .image-text {
@@ -87,7 +89,7 @@
     transform: translate(-50%, -50%); /*Center the text exactly */
     text-align: center;
     font-family: 'Unbounded', bold;
-    font-size: 6.5vw;
+    font-size: 8.5vw;
     line-height: normal;
     color:#FAD7BF;
     text-shadow: 2px 2px 4px rgba(56, 56, 56, 0.5); 
@@ -128,10 +130,12 @@ h1 {
 }
 
 h2 {
-    font-family: 'Josefin Sans';
-    font-size: 2vw;
-    color: #FAD7BF;
-    text-align:center;
+    font-family: 'Unbounded', bold;
+    font-size: 2.5vw;
+    line-height: normal;
+    color:#f5a0d3;
+    text-align: center;
+    margin: 1.5vw;
 }
 p {
     font-family: "Inconsolata";
@@ -142,8 +146,39 @@ p {
 }
 
 a {
-    color:#FAD7BF;
+    color:#D87541;
 }
+
+/* make nav bar  that always fits length of screen*/
+.web-menu {
+    font-family: 'League Spartan';
+    color: #D87541;
+    font-size: 2.5vw;
+    /* position: sticky; makes nav bar below opening image but remain as u scroll down */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure the navigation is above other content if needed */
+    margin: 1vw;
+  }
+  
+  .web-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .web-menu li {
+    display: inline;
+  }
+  
+  .web-menu a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #D87541;
+  }
 
 
 /* Map Styling */
@@ -190,5 +225,83 @@ a {
         background-color: #941b50;
     }
 
+/* Styles for the hamburger menu icon */
+.hamburger-menu {
+    display: none; /* Hide by default on larger screens */
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none; /* Hide the navigation links by default on smaller screens */
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-links.active {
+    display: block; /* Show the links when the menu is toggled */
+    font-family: 'League Spartan';
+    color: #D87541;
+  }
+/* hamburger bar  */
+  .bar {
+    width: 35px;
+    height: 5px;
+    background-color: #D87541;
+    margin: 5px 0;
+  }
+
+/* Responsive layout - designing for mobile devics*/
+@media screen and (max-width: 767px) {
+    @media screen and (max-width: 767px) {
+        .column-60 {
+            width: 100%;
+        }
+    
+        .column-40 {
+            width: 100%;
+        }
+    
+        .web-menu {
+            display: none;
+        }
+    
+        .hamburger-menu {
+            display: block;
+        }
+    
+        .nav-links {
+            /* Remove display: none; or set it to display: block; */
+            padding: 0;
+            list-style: none;
+        }
+    
+        .nav-links.active {
+            display: block;
+            font-family: 'League Spartan';
+            color: #D87541;
+        }
+    
+        .header {
+            width: 100%;
+            height: auto;
+            position: relative;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 10px;
+        }
+    
+        .header a :visited {
+            color: #008037;
+        }
+    
+        .header a {
+            color: #D87541;
+        }
+    }
+    
+}
 
 
