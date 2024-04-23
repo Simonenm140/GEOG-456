@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Heatmap</title>
+    <title>Lesbian Nightlife Over Time</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
@@ -18,24 +18,74 @@
 
 </style> -->
 <body>
-    <h1>LESBIAN NIGHTLIFE OVER TIME 1911-2024</h1>
+    <div class="band-image">
+        <img src="photos/controller1.png" alt="DJ Console" >
+    </div>
+    <div class = "image-text">
+        <span style="color: #D52D00"> LESBIAN </span> <span style="color: #F7883F"> NIGHT</span><span style="color: #F1AC5B">LIFE </span><span style="color:#DF5FAC"> OVER </span><span style="color: #941B50"> TIME </span>
+    </div>
+    <br>
+    <h2>As queer individuals and scholars, we place great significance on the recognition of lesbian spaces. </h2>
 <div class="container">
-    <div class="column column-40">
-    <p>As queer individuals and scholars, we place great significance on this geovisualization and the examination of lesbian spaces. Lesbian bars and clubs have been historically underinvested, understudied, and underappreciated, particularly in comparison to gay male spaces. 
+    <div class="column-40">
+    <br>
+    <p>Lesbian bars and clubs have been historically underinvested, understudied, and underappreciated, particularly in comparison to gay male spaces. 
     <br>
     <br>
-    Some of our data draws from “Mapping the Gay Guides”  (MGG), which visualizes the Damron Address Books in an effort to illustrate often overlooked queer geographies. These travel guides, dating back to the early 1960s, have been a longstanding resource for gay men. Similar to the green books utilized by African Americans in the Jim Crow era to locate businesses catering to Black clients in the South, Damron Guides played a crucial role in helping a generation of queer individuals identify spaces of community, pleasure, and politics. 
+    Some of our data draws from <a href="https://www.mappingthegayguides.org/"  target="_blank">“Mapping the Gay Guides” (MGG),</a>
+    which visualizes the Damron Address Books in an effort to illustrate often overlooked queer geographies. These travel guides, dating back to the early 1960s, have been a longstanding resource for gay men.
     </p>
     </div>
-    <div class="column column-60">
-        <img src="https://scontent-iad3-2.xx.fbcdn.net/v/t1.6435-9/87394745_2574266349515710_477244752907993088_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Y7hTq36EwKwAb5CMgQc&_nc_ht=scontent-iad3-2.xx&oh=00_AfBntYoOpHR8QDufxjwEfj3TJ69j09loMTUlkJ3pDeRLBQ&oe=6647A0B3" alt="ariel bar, 1980-1984">
+    <div class="column-60">
+        <figure class="image-container">
+            <img src=https://cdn.kqed.org/wp-content/uploads/sites/2/2023/06/GettyImages-559574021-scaled-e1686626114966.jpg alt="Illustration by Leon Bonnotte from ‘Le Sourire.’ Paris, France, 1925." >
+            <figcaption class="caption">Illustration by Leon Bonnotte from ‘Le Sourire.’ Paris, France, 1925. Fototeca Gilardi/ Getty Images</figcaption>
+        </figure>
+        
     </div> 
+    <div class = "column-60">
+        <figure class="image-container">
+            <img src= https://images.e-flux-systems.com/Hood_Rave_GRAB_PICS_FROM_HERE_Page_01_Image_0001.jpg,1920 alt="Illustration by Leon Bonnotte from ‘Le Sourire.’ Paris, France, 1925." >
+            <figcaption class="caption">Photo pulled from “Hood Rave LA: Framing The Black Femme Underground”, photographed by Sam Lee 
+            </figcaption>
+        </figure>
+        
+    </div>
+    <div class="column-40">
+        <br>
+        <p>
+            Similar to the green books utilized by African Americans in the Jim Crow era to locate businesses catering to Black clients in the South, the Damron Guides played a crucial role in helping a generation of queer individuals identify spaces of community, pleasure, and politics. By linking geographical coordinates to each location mentioned in the Damron Guides, MGG offers a platform for visualizing the evolution of queer spaces from 1965 to 1989.
+        </p>
+    </div>
+    <div class = "column-60">
+        <br>
+        <p>
+            However, locations marked as “L” (ladies/lesbian) only appear from 1980-1989, and many of these spaces cannot be understood as “lesbian-only spaces,” but spaces where some lesbian frequented. For this reason, our map shows a large amount of data during this time frame. Because the MGG only provides relevant data from 1980-1989, we used Wikipedia, the Lesbian Bar Project, and business websites/Instagrams to fill in the gaps. There is not one comprehensive dataset, and many lesbian bars (particularly in the early 1900s) were/are underground and thus are not on official records. In other words, our data is not authoritative or complete, but it is a compliation of the most accesible data. 
+            <br>
+            <br>
+            With this data, we created a cluster heatmap that shows the movement of lesbian bars and clubs over time. You can interact with the clusters to see the names and addresses of these venues. 
+            <br>
+            <br>
+            <br>
+            Interact with our map below!
+        </p>
+    </div>
+    <div class = "column-40">
+        <figure class="image-container">
+            <img src=  https://kansascitydefender.com/wp-content/uploads/2023/12/GroupPhoto002_Soakies_GaryCarringtonCollection_BqKC-1007x1536.jpeg alt = "Soakies" >
+            <figcaption class="caption">Soakie’s: a former Black gay bar in Kansas City from 1994-2004. Photo pulled from “{B/qKC}: a digital archive”
+            </figcaption>
+        </figure>
+       
+
+    </div>
+
+
+     
 </div>
-    <img>
     <h2 id="theYear">Year: 1911</h2>
     <input id="year-slider" type="range" min="1910" max="2024" step="1" value="1910">
     <div id="map"></div>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin="">
