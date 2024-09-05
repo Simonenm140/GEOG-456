@@ -1,0 +1,134 @@
+---
+title: "GEOG 456 Final Project"
+author: "Simone McFarlane"
+date: "2024-03-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r read_data}
+
+library(tidyverse)
+
+library(readxl)
+
+library(writexl)
+
+library(tigris)
+
+library(sf)
+
+library(tidygeocoder)
+
+library(dplyr)
+
+options(scipen = 999)
+```
+
+
+##download data
+
+```{r download}
+
+# Read the RDS file back into R as an object
+loaded_data <- readRDS("data.rds")
+
+```
+
+
+
+## preparation
+
+```{r prep}
+
+
+# assign "keyword" to filter out rows in study area
+
+keyword <- c("Bars/Clubs")
+keyword2 <- c("(L)") # refine to only include L, Some L, Many L, (not liquor or disco only places)
+
+
+# get rid of redudant rows
+
+loaded_data <- loaded_data |>
+  filter(grepl(paste(keyword, collapse = "|"), type)) |>
+  filter(grepl(paste(keyword2, collapse = "|"), amenityfeatures)) |>
+  select(-notes)
+
+les_clean <- loaded_data |>
+  select(-type, 
+         -amenityfeatures, 
+         -ID)
+
+les_clean <- les_clean |>
+  rename(long = lon)
+
+# Load your Excel file into R
+excel_data <- read_excel("Wiki_LBP.xlsx")
+
+# Write the data to a CSV file
+write.csv(excel_data, file = "WIKI.csv", row.names = FALSE)
+
+dat <- read.csv("WIKI.csv")
+
+# Geocode addresses
+geocoded_data <- dat |>
+  tidygeocoder::geocode(
+    address = streetaddress,
+    method = "osm"
+  )
+
+#remove zip code column 
+
+geocoded_data <- geocoded_data |>
+  select(-zipcode)
+
+# Combine geocoded data with original data
+data <- rbind(geocoded_data, les_clean)
+
+#fill empty street address rows with name of city and state
+# 
+# fill_address <- function(data) {
+#   # Replace empty street addresses with city and state
+#   data$streetaddress[is.na(data$streetaddress) | data$streetaddress == ""] <- 
+#     paste(data$city[is.na(data$streetaddress) | data$streetaddress == ""], 
+#           data$state[is.na(data$streetaddress) | data$streetaddress == ""], 
+#           sep = ", ")
+#   
+#   return(data)
+# }
+# 
+# # Apply the function to fill in empty street addresses
+# df_filled <- fill_address(data)
+# 
+# # Geocode addresses
+# geocoded_data2 <- df_filled |>
+#   tidygeocoder::geocode(
+#     address = streetaddress,
+#     method = "osm"
+#   )
+
+
+# Remove rows with NA values in 'lon' and 'lat' columns
+#data <- data[complete.cases(data$long, data$lat), ]
+
+# Convert club data to spatial points data frame
+#club_coords1 <- st_as_sf(data, coords = c("long", "lat"), crs = 4326)
+
+#class(club_coords)
+#control all points by time , all points have popup of name, cluster of heatmap with lesbian flag colors, thursday
+#write to geojson
+
+#st_write(club_coords1, "clean_dat2.geojson", append = FALSE)
+
+
+write.csv(data, "clean_cord.csv")
+
+# data is currently point data, would we need a to make a sepe
+
+
+```
+
